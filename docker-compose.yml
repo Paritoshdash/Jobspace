@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: jobspace-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: jobspace
+      POSTGRES_PASSWORD: jobspace
+      POSTGRES_DB: jobspace
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
