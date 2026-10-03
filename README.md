@@ -106,11 +106,11 @@ cp ../.env.example .env
 
 Ensure `DATABASE_URL` points to port `5433`:
 ```env
-DATABASE_URL=postgresql+psycopg2://jobspace:jobspace@localhost:5433/jobspace
-OLLAMA_BASE_URL=http://localhost:11434
+DATABASE_URL=
+OLLAMA_BASE_URL=
 OLLAMA_EMBED_MODEL=nomic-embed-text:latest
 OLLAMA_CHAT_MODEL=qwen3:14b
-SECRET_KEY=change-this-in-production-jobspace-secret-key-32-chars
+SECRET_KEY=
 ALGORITHM=HS256
 ACCESS_TOKEN_EXPIRE_MINUTES=1440
 ```
