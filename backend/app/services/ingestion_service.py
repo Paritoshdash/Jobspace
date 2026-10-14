@@ -1,11 +1,6 @@
-<<<<<<< HEAD
 from datetime import datetime, timezone, timedelta
 import logging
 from sqlalchemy import func, select, update
-=======
-import logging
-from sqlalchemy import func, select
->>>>>>> e51ad40449a03608e11afea6df7a10ca56c252f5
 from sqlalchemy.orm import Session
 
 from app.models.job import Job
@@ -88,7 +83,6 @@ def ingest_jobs(
             )
 
         if existing_job is not None:
-<<<<<<< HEAD
             # Update existing job with refreshed metadata and last_seen timestamp
             now_dt = datetime.now(timezone.utc)
             existing_job.last_seen_at = now_dt
@@ -96,10 +90,6 @@ def ingest_jobs(
             existing_job.status = "ACTIVE"
             updated = True
 
-=======
-            # Update existing job with refreshed metadata if present
-            updated = False
->>>>>>> e51ad40449a03608e11afea6df7a10ca56c252f5
             if job_data.posted_at and existing_job.posted_at != job_data.posted_at:
                 existing_job.posted_at = job_data.posted_at
                 updated = True
@@ -125,10 +115,7 @@ def ingest_jobs(
         # --------------------------------------------------
         # 3. Create job
         # --------------------------------------------------
-<<<<<<< HEAD
         now_dt = datetime.now(timezone.utc)
-=======
->>>>>>> e51ad40449a03608e11afea6df7a10ca56c252f5
         job = Job(
             title=title_clean,
             company=company_clean,
@@ -138,7 +125,6 @@ def ingest_jobs(
             experience_level=job_data.experience_level.strip().lower() if job_data.experience_level else None,
             salary_min=job_data.salary_min,
             salary_max=job_data.salary_max,
-<<<<<<< HEAD
             salary_currency="INR",
             source=source_clean,
             source_url=source_url_clean,
@@ -147,11 +133,6 @@ def ingest_jobs(
             last_seen_at=now_dt,
             status="ACTIVE",
             is_active=True,
-=======
-            source=source_clean,
-            source_url=source_url_clean,
-            posted_at=job_data.posted_at,
->>>>>>> e51ad40449a03608e11afea6df7a10ca56c252f5
             analysis_status="pending",
         )
 
@@ -253,7 +234,6 @@ def backfill_missing_embeddings(db: Session, limit: int = 50) -> int:
     return processed
 
 
-<<<<<<< HEAD
 def mark_stale_jobs(db: Session, days: int = 30) -> int:
     """
     Mark jobs that have not been seen in the specified number of days as STALE and inactive.
@@ -273,8 +253,6 @@ def mark_stale_jobs(db: Session, days: int = 30) -> int:
     return result.rowcount
 
 
-=======
->>>>>>> e51ad40449a03608e11afea6df7a10ca56c252f5
 def reprocess_failed_analyses(db: Session, limit: int = 20) -> int:
     """
     Find jobs where AI analysis previously failed and retry.

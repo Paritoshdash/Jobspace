@@ -13,13 +13,9 @@ import {
   X, 
   LogOut, 
   User as UserIcon,
-<<<<<<< HEAD
   Search,
   FileText,
   Compass
-=======
-  Search
->>>>>>> e51ad40449a03608e11afea6df7a10ca56c252f5
 } from 'lucide-react';
 
 export default function Navbar() {
@@ -30,10 +26,7 @@ export default function Navbar() {
 
   const navLinks = [
     { name: 'Search Jobs', href: '/', icon: Search },
-<<<<<<< HEAD
     { name: 'Jobs For Me', href: '/recommendations', icon: Sparkles, authRequired: true },
-=======
->>>>>>> e51ad40449a03608e11afea6df7a10ca56c252f5
     { name: 'Saved Jobs', href: '/saved', icon: Bookmark, authRequired: true },
     { name: 'Applications', href: '/applications', icon: Briefcase, authRequired: true },
     { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard, authRequired: true },
@@ -45,7 +38,6 @@ export default function Navbar() {
   };
 
   return (
-<<<<<<< HEAD
     <header className="sticky top-0 z-50 w-full border-b border-slate-200/80 bg-white/95 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Brand */}
@@ -64,19 +56,6 @@ export default function Navbar() {
               <span className="text-[10px] font-semibold text-slate-500 tracking-wider uppercase mt-1">
                 AI Job Intelligence
               </span>
-=======
-    <header className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/95 backdrop-blur-md">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        {/* Brand */}
-        <div className="flex items-center gap-8">
-          <Link href="/" className="flex items-center gap-2 group">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-600 text-white shadow-xs group-hover:bg-blue-700 transition">
-              <Sparkles className="h-5 w-5" />
-            </div>
-            <div className="flex flex-col">
-              <span className="text-lg font-bold tracking-tight text-slate-900 leading-none">JobSpace</span>
-              <span className="text-[10px] font-medium text-blue-600 tracking-wider uppercase mt-0.5">Semantic Job Engine</span>
->>>>>>> e51ad40449a03608e11afea6df7a10ca56c252f5
             </div>
           </Link>
 
@@ -89,7 +68,6 @@ export default function Navbar() {
                 <Link
                   key={link.name}
                   href={link.href}
-<<<<<<< HEAD
                   className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                     isActive
                       ? 'bg-blue-50/80 text-blue-700 font-semibold'
@@ -97,15 +75,6 @@ export default function Navbar() {
                   }`}
                 >
                   <Icon className={`h-4 w-4 ${isActive ? 'text-blue-600' : 'text-slate-400'}`} />
-=======
-                  className={`flex items-center gap-1.5 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                    isActive
-                      ? 'bg-slate-100 text-blue-600 font-semibold'
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
-                  }`}
-                >
-                  <Icon className="h-4 w-4" />
->>>>>>> e51ad40449a03608e11afea6df7a10ca56c252f5
                   {link.name}
                 </Link>
               );
@@ -119,7 +88,6 @@ export default function Navbar() {
             <div className="h-8 w-24 bg-slate-100 animate-pulse rounded-md" />
           ) : user ? (
             <div className="flex items-center gap-3">
-<<<<<<< HEAD
               <Link
                 href="/profile"
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-semibold transition ${
@@ -142,44 +110,21 @@ export default function Navbar() {
               >
                 <LogOut className="h-3.5 w-3.5" />
                 <span>Exit</span>
-=======
-              <div className="flex items-center gap-2 px-3 py-1.5 rounded-md bg-slate-50 border border-slate-200 text-slate-700 text-xs font-medium">
-                <UserIcon className="h-3.5 w-3.5 text-slate-400" />
-                <span className="max-w-[140px] truncate">{user.email}</span>
-              </div>
-              <button
-                onClick={handleLogout}
-                className="flex items-center gap-1 text-xs font-medium text-slate-500 hover:text-red-600 px-2 py-1.5 rounded hover:bg-red-50 transition"
-                title="Sign out"
-              >
-                <LogOut className="h-3.5 w-3.5" />
-                Sign Out
->>>>>>> e51ad40449a03608e11afea6df7a10ca56c252f5
               </button>
             </div>
           ) : (
             <div className="flex items-center gap-2">
               <Link
                 href="/login"
-<<<<<<< HEAD
                 className="text-sm font-semibold text-slate-600 hover:text-slate-900 px-3 py-1.5 rounded-lg hover:bg-slate-50 transition"
-=======
-                className="text-sm font-medium text-slate-600 hover:text-slate-900 px-3 py-1.5 rounded-md hover:bg-slate-50 transition"
->>>>>>> e51ad40449a03608e11afea6df7a10ca56c252f5
               >
                 Sign In
               </Link>
               <Link
                 href="/register"
-<<<<<<< HEAD
                 className="text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-sm shadow-blue-500/20 transition"
               >
                 Get Started
-=======
-                className="text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 px-3.5 py-1.5 rounded-md shadow-xs transition"
-              >
-                Register
->>>>>>> e51ad40449a03608e11afea6df7a10ca56c252f5
               </Link>
             </div>
           )}
@@ -189,11 +134,7 @@ export default function Navbar() {
         <div className="flex md:hidden">
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-<<<<<<< HEAD
             className="p-2 rounded-lg text-slate-500 hover:text-slate-700 hover:bg-slate-100"
-=======
-            className="p-2 rounded-md text-slate-500 hover:text-slate-700 hover:bg-slate-100"
->>>>>>> e51ad40449a03608e11afea6df7a10ca56c252f5
             aria-label="Toggle menu"
           >
             {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -203,11 +144,7 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {mobileMenuOpen && (
-<<<<<<< HEAD
         <div className="md:hidden border-b border-slate-200 bg-white px-4 pt-2 pb-5 space-y-2">
-=======
-        <div className="md:hidden border-b border-slate-200 bg-white px-4 pt-2 pb-4 space-y-2">
->>>>>>> e51ad40449a03608e11afea6df7a10ca56c252f5
           {navLinks.map((link) => {
             const Icon = link.icon;
             const isActive = pathname === link.href;
@@ -216,7 +153,6 @@ export default function Navbar() {
                 key={link.name}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-<<<<<<< HEAD
                 className={`flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-sm font-semibold ${
                   isActive
                     ? 'bg-blue-50 text-blue-700'
@@ -224,20 +160,10 @@ export default function Navbar() {
                 }`}
               >
                 <Icon className="h-4 w-4" />
-=======
-                className={`flex items-center gap-2 px-3 py-2 rounded-md text-base font-medium ${
-                  isActive
-                    ? 'bg-blue-50 text-blue-600'
-                    : 'text-slate-700 hover:bg-slate-50 hover:text-slate-900'
-                }`}
-              >
-                <Icon className="h-5 w-5" />
->>>>>>> e51ad40449a03608e11afea6df7a10ca56c252f5
                 {link.name}
               </Link>
             );
           })}
-<<<<<<< HEAD
           {user && (
             <Link
               href="/profile"
@@ -252,8 +178,6 @@ export default function Navbar() {
               Profile & Resume
             </Link>
           )}
-=======
->>>>>>> e51ad40449a03608e11afea6df7a10ca56c252f5
           <div className="pt-3 border-t border-slate-100">
             {user ? (
               <div className="space-y-2">
@@ -263,11 +187,7 @@ export default function Navbar() {
                     handleLogout();
                     setMobileMenuOpen(false);
                   }}
-<<<<<<< HEAD
                   className="w-full flex items-center gap-2 px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg font-semibold"
-=======
-                  className="w-full flex items-center gap-2 px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-md font-medium"
->>>>>>> e51ad40449a03608e11afea6df7a10ca56c252f5
                 >
                   <LogOut className="h-4 w-4" />
                   Sign Out
@@ -278,26 +198,16 @@ export default function Navbar() {
                 <Link
                   href="/login"
                   onClick={() => setMobileMenuOpen(false)}
-<<<<<<< HEAD
                   className="w-full text-center py-2 text-sm font-semibold text-slate-700 border border-slate-200 rounded-lg hover:bg-slate-50"
-=======
-                  className="w-full text-center py-2 text-sm font-medium text-slate-700 border border-slate-200 rounded-md hover:bg-slate-50"
->>>>>>> e51ad40449a03608e11afea6df7a10ca56c252f5
                 >
                   Sign In
                 </Link>
                 <Link
                   href="/register"
                   onClick={() => setMobileMenuOpen(false)}
-<<<<<<< HEAD
                   className="w-full text-center py-2 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 shadow-sm"
                 >
                   Get Started
-=======
-                  className="w-full text-center py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700"
-                >
-                  Register
->>>>>>> e51ad40449a03608e11afea6df7a10ca56c252f5
                 </Link>
               </div>
             )}

@@ -75,15 +75,12 @@ class Job(Base):
         nullable=True,
     )
 
-<<<<<<< HEAD
     salary_currency: Mapped[str] = mapped_column(
         String(10),
         nullable=False,
         default="INR",
     )
 
-=======
->>>>>>> e51ad40449a03608e11afea6df7a10ca56c252f5
     source: Mapped[str] = mapped_column(
         String(100),
         nullable=False,
@@ -99,7 +96,6 @@ class Job(Base):
         nullable=True,
     )
 
-<<<<<<< HEAD
     first_seen_at: Mapped[datetime | None] = mapped_column(
         DateTime(timezone=True),
         server_default=func.now(),
@@ -123,8 +119,6 @@ class Job(Base):
         default=True,
     )
 
-=======
->>>>>>> e51ad40449a03608e11afea6df7a10ca56c252f5
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         server_default=func.now(),
