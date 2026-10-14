@@ -99,3 +99,6 @@ desktop.ini
 .agents/
 .gemini/
 scratch/
+
+# Local resume storage
+backend/storage/resumes/
