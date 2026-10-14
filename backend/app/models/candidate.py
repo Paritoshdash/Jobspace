@@ -1,16 +1,25 @@
 from datetime import datetime
 from typing import TYPE_CHECKING
 
+<<<<<<< HEAD
 from sqlalchemy import Boolean, DateTime, ForeignKey, Integer, String, Text, func
+=======
+from sqlalchemy import DateTime, ForeignKey, String, Text, func
+>>>>>>> e51ad40449a03608e11afea6df7a10ca56c252f5
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base import Base
 
 
 if TYPE_CHECKING:
+<<<<<<< HEAD
     from app.models.resume import Resume
     from app.models.skill import CandidateSkill
     from app.models.user import User
+=======
+    from app.models.user import User
+    from app.models.skill import CandidateSkill
+>>>>>>> e51ad40449a03608e11afea6df7a10ca56c252f5
 
 
 class CandidateProfile(Base):
@@ -42,6 +51,7 @@ class CandidateProfile(Base):
         nullable=True,
     )
 
+<<<<<<< HEAD
     phone: Mapped[str | None] = mapped_column(
         String(50),
         nullable=True,
@@ -52,6 +62,8 @@ class CandidateProfile(Base):
         nullable=True,
     )
 
+=======
+>>>>>>> e51ad40449a03608e11afea6df7a10ca56c252f5
     experience_level: Mapped[str | None] = mapped_column(
         String(50),
         nullable=True,
@@ -67,6 +79,7 @@ class CandidateProfile(Base):
         nullable=True,
     )
 
+<<<<<<< HEAD
     preferred_employment_type: Mapped[str | None] = mapped_column(
         String(50),
         nullable=True,
@@ -77,6 +90,8 @@ class CandidateProfile(Base):
         nullable=True,
     )
 
+=======
+>>>>>>> e51ad40449a03608e11afea6df7a10ca56c252f5
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         server_default=func.now(),
@@ -97,6 +112,7 @@ class CandidateProfile(Base):
     skills: Mapped[list["CandidateSkill"]] = relationship(
         back_populates="candidate",
         cascade="all, delete-orphan",
+<<<<<<< HEAD
     )
 
     educations: Mapped[list["CandidateEducation"]] = relationship(
@@ -214,4 +230,6 @@ class CandidateExperience(Base):
 
     candidate: Mapped["CandidateProfile"] = relationship(
         back_populates="experiences",
+=======
+>>>>>>> e51ad40449a03608e11afea6df7a10ca56c252f5
     )

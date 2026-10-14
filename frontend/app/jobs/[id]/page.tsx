@@ -22,10 +22,15 @@ import {
   Calendar,
   AlertCircle,
   Loader2,
+<<<<<<< HEAD
   Send,
   IndianRupee
 } from 'lucide-react';
 import { formatSalaryINR } from '../../../lib/utils/salary';
+=======
+  Send
+} from 'lucide-react';
+>>>>>>> e51ad40449a03608e11afea6df7a10ca56c252f5
 
 interface JobDetailsProps {
   params: Promise<{ id: string }>;
@@ -153,6 +158,21 @@ export default function JobDetailsPage({ params }: JobDetailsProps) {
     }
   };
 
+<<<<<<< HEAD
+=======
+  const formatSalary = (min?: number | null, max?: number | null) => {
+    if (!min && !max) return null;
+    const fmt = (n: number) => {
+      if (n >= 100000) return `${(n / 1000).toLocaleString()}k`;
+      return n.toLocaleString();
+    };
+    if (min && max) return `$${fmt(min)} - $${fmt(max)}`;
+    if (min) return `From $${fmt(min)}`;
+    if (max) return `Up to $${fmt(max)}`;
+    return null;
+  };
+
+>>>>>>> e51ad40449a03608e11afea6df7a10ca56c252f5
   if (isLoading) {
     return (
       <div className="mx-auto max-w-4xl px-4 py-12">
@@ -187,7 +207,11 @@ export default function JobDetailsPage({ params }: JobDetailsProps) {
     );
   }
 
+<<<<<<< HEAD
   const salaryString = formatSalaryINR(job.salary_min, job.salary_max, job.salary_currency);
+=======
+  const salaryString = formatSalary(job.salary_min, job.salary_max);
+>>>>>>> e51ad40449a03608e11afea6df7a10ca56c252f5
 
   return (
     <div className="min-h-screen bg-slate-50 py-8 px-4 sm:px-6 lg:px-8">
@@ -277,8 +301,13 @@ export default function JobDetailsPage({ params }: JobDetailsProps) {
               </div>
             )}
             {salaryString && (
+<<<<<<< HEAD
               <div className="flex items-center gap-1.5 rounded-md bg-amber-50 px-3 py-1.5 border border-amber-200 text-amber-900 font-bold">
                 <IndianRupee className="h-3.5 w-3.5 text-amber-600" />
+=======
+              <div className="flex items-center gap-1.5 rounded-md bg-emerald-50 px-3 py-1.5 border border-emerald-200 text-emerald-800 font-semibold">
+                <Coins className="h-3.5 w-3.5 text-emerald-600" />
+>>>>>>> e51ad40449a03608e11afea6df7a10ca56c252f5
                 <span>{salaryString}</span>
               </div>
             )}

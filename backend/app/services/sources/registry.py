@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 from app.services.sources.ashby import AshbyAdapter
+=======
+>>>>>>> e51ad40449a03608e11afea6df7a10ca56c252f5
 from app.services.sources.base import JobSource
 from app.services.sources.greenhouse import GreenhouseAdapter
 from app.services.sources.lever import LeverAdapter
@@ -20,6 +23,7 @@ GREENHOUSE_COMPANIES = [
         "board_token": "cloudflare",
         "company_name": "Cloudflare",
     },
+<<<<<<< HEAD
     {
         "board_token": "gitlab",
         "company_name": "GitLab",
@@ -28,6 +32,8 @@ GREENHOUSE_COMPANIES = [
         "board_token": "razorpaysoftwareprivatelimited",
         "company_name": "Razorpay",
     },
+=======
+>>>>>>> e51ad40449a03608e11afea6df7a10ca56c252f5
 ]
 
 LEVER_COMPANIES = [
@@ -45,6 +51,7 @@ LEVER_COMPANIES = [
     },
 ]
 
+<<<<<<< HEAD
 ASHBY_COMPANIES = [
     {
         "company_token": "linear",
@@ -60,6 +67,8 @@ ASHBY_COMPANIES = [
     },
 ]
 
+=======
+>>>>>>> e51ad40449a03608e11afea6df7a10ca56c252f5
 
 def get_greenhouse_sources() -> list[GreenhouseAdapter]:
     return [
@@ -81,6 +90,7 @@ def get_lever_sources() -> list[LeverAdapter]:
     ]
 
 
+<<<<<<< HEAD
 def get_ashby_sources() -> list[AshbyAdapter]:
     return [
         AshbyAdapter(
@@ -97,4 +107,11 @@ def get_all_sources() -> list[JobSource]:
         *get_greenhouse_sources(),
         *get_lever_sources(),
         *get_ashby_sources(),
+=======
+def get_all_sources() -> list[JobSource]:
+    """Returns all registered ATS sources across all adapters."""
+    return [
+        *get_greenhouse_sources(),
+        *get_lever_sources(),
+>>>>>>> e51ad40449a03608e11afea6df7a10ca56c252f5
     ]

@@ -31,6 +31,9 @@ httpx==0.28.1
 requests==2.34.2
 pgvector==0.5.0
 pytest==9.1.1
+<<<<<<< HEAD
 python-multipart==0.0.20
 pypdf==5.1.0
 python-docx==1.1.2
+=======
+>>>>>>> e51ad40449a03608e11afea6df7a10ca56c252f5

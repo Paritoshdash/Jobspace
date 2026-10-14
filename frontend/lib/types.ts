@@ -10,6 +10,7 @@ export interface Job {
   experience_level?: string | null;
   salary_min?: number | null;
   salary_max?: number | null;
+<<<<<<< HEAD
   salary_currency?: string;
   status?: string;
   is_active?: boolean;
@@ -18,6 +19,11 @@ export interface Job {
   posted_at?: string | null;
   first_seen_at?: string | null;
   last_seen_at?: string | null;
+=======
+  source: string;
+  source_url?: string | null;
+  posted_at?: string | null;
+>>>>>>> e51ad40449a03608e11afea6df7a10ca56c252f5
   created_at: string;
   updated_at: string;
   is_saved?: boolean | null;
@@ -27,7 +33,10 @@ export interface Job {
 export interface JobSearchResult {
   job: Job;
   relevance_score: number;
+<<<<<<< HEAD
   match_reasons?: string[];
+=======
+>>>>>>> e51ad40449a03608e11afea6df7a10ca56c252f5
 }
 
 export interface JobFacets {
@@ -69,6 +78,7 @@ export interface Application {
   job: Job;
 }
 
+<<<<<<< HEAD
 export interface Education {
   id: number;
   candidate_id: number;
@@ -163,6 +173,8 @@ export interface AcquisitionStatus {
   error_message?: string | null;
 }
 
+=======
+>>>>>>> e51ad40449a03608e11afea6df7a10ca56c252f5
 export interface SearchFilters {
   q?: string;
   location?: string;
@@ -171,7 +183,10 @@ export interface SearchFilters {
   employment_type?: string;
   min_salary?: number;
   max_salary?: number;
+<<<<<<< HEAD
   sort_by?: 'relevance' | 'newest' | 'salary';
+=======
+>>>>>>> e51ad40449a03608e11afea6df7a10ca56c252f5
   skip?: number;
   limit?: number;
 }

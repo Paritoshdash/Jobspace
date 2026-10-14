@@ -1,15 +1,24 @@
 from datetime import datetime, timezone
+<<<<<<< HEAD
 import json
 import logging
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.models.acquisition import AcquisitionRun
+=======
+import logging
+from sqlalchemy.orm import Session
+
+>>>>>>> e51ad40449a03608e11afea6df7a10ca56c252f5
 from app.services.source_ingestion import ingest_from_source
 from app.services.sources.base import JobSource
 from app.services.sources.registry import (
     get_all_sources,
+<<<<<<< HEAD
     get_ashby_sources,
+=======
+>>>>>>> e51ad40449a03608e11afea6df7a10ca56c252f5
     get_greenhouse_sources,
     get_lever_sources,
 )
@@ -20,19 +29,28 @@ logger = logging.getLogger(__name__)
 def run_sources_ingestion(
     db: Session,
     sources: list[JobSource],
+<<<<<<< HEAD
     source_type_label: str = "custom",
+=======
+>>>>>>> e51ad40449a03608e11afea6df7a10ca56c252f5
     limit_per_source: int | None = None,
 ) -> dict:
     """
     Run ingestion for an arbitrary list of JobSource instances.
     Failure in one source is strictly isolated and does not stop subsequent sources.
+<<<<<<< HEAD
     Logs run outcome in database (AcquisitionRun).
+=======
+>>>>>>> e51ad40449a03608e11afea6df7a10ca56c252f5
     """
     start_time = datetime.now(timezone.utc)
     results = []
     total_created = 0
     total_skipped = 0
+<<<<<<< HEAD
     failed_sources = 0
+=======
+>>>>>>> e51ad40449a03608e11afea6df7a10ca56c252f5
 
     for source in sources:
         source_name = getattr(source, "company_name", type(source).__name__)
@@ -59,7 +77,10 @@ def run_sources_ingestion(
             )
 
         except Exception as exc:
+<<<<<<< HEAD
             failed_sources += 1
+=======
+>>>>>>> e51ad40449a03608e11afea6df7a10ca56c252f5
             logger.error(f"Source ingestion failed for {source_name}: {exc}")
             results.append(
                 {
@@ -75,6 +96,7 @@ def run_sources_ingestion(
     end_time = datetime.now(timezone.utc)
     duration_seconds = round((end_time - start_time).total_seconds(), 2)
 
+<<<<<<< HEAD
     # Determine overall status
     if failed_sources == 0:
         overall_status = "completed"
@@ -86,12 +108,17 @@ def run_sources_ingestion(
     summary = {
         "status": overall_status,
         "source_type": source_type_label,
+=======
+    return {
+        "status": "completed",
+>>>>>>> e51ad40449a03608e11afea6df7a10ca56c252f5
         "started_at": start_time.isoformat(),
         "completed_at": end_time.isoformat(),
         "duration_seconds": duration_seconds,
         "sources_processed": len(results),
         "total_created": total_created,
         "total_skipped": total_skipped,
+<<<<<<< HEAD
         "failed_sources": failed_sources,
         "results": results,
     }
@@ -117,6 +144,11 @@ def run_sources_ingestion(
 
     return summary
 
+=======
+        "results": results,
+    }
+
+>>>>>>> e51ad40449a03608e11afea6df7a10ca56c252f5
 
 def run_greenhouse_ingestion(
     db: Session,
@@ -126,7 +158,10 @@ def run_greenhouse_ingestion(
     return run_sources_ingestion(
         db=db,
         sources=get_greenhouse_sources(),
+<<<<<<< HEAD
         source_type_label="greenhouse",
+=======
+>>>>>>> e51ad40449a03608e11afea6df7a10ca56c252f5
         limit_per_source=limit_per_source,
     )
 
@@ -139,6 +174,7 @@ def run_lever_ingestion(
     return run_sources_ingestion(
         db=db,
         sources=get_lever_sources(),
+<<<<<<< HEAD
         source_type_label="lever",
         limit_per_source=limit_per_source,
     )
@@ -153,6 +189,8 @@ def run_ashby_ingestion(
         db=db,
         sources=get_ashby_sources(),
         source_type_label="ashby",
+=======
+>>>>>>> e51ad40449a03608e11afea6df7a10ca56c252f5
         limit_per_source=limit_per_source,
     )
 
@@ -161,6 +199,7 @@ def run_all_sources_ingestion(
     db: Session,
     limit_per_source: int | None = None,
 ) -> dict:
+<<<<<<< HEAD
     """Run ingestion across all configured ATS platforms (Greenhouse, Lever, Ashby, etc.)."""
     return run_sources_ingestion(
         db=db,
@@ -194,3 +233,11 @@ def get_acquisition_status(db: Session) -> dict:
         "error_message": latest.error_message,
         "summary": json.loads(latest.summary_json) if latest.summary_json else None,
     }
+=======
+    """Run ingestion across all configured ATS platforms (Greenhouse, Lever, etc.)."""
+    return run_sources_ingestion(
+        db=db,
+        sources=get_all_sources(),
+        limit_per_source=limit_per_source,
+    )
+>>>>>>> e51ad40449a03608e11afea6df7a10ca56c252f5

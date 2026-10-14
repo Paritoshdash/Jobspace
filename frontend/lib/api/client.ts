@@ -82,6 +82,7 @@ export async function apiFetch<T>(
     return text as unknown as T;
   }
 }
+<<<<<<< HEAD
 
 export const apiClient = {
   get: <T>(endpoint: string, options?: RequestInit): Promise<T> =>
@@ -101,3 +102,5 @@ export const apiClient = {
   delete: <T>(endpoint: string, options?: RequestInit): Promise<T> =>
     apiFetch<T>(endpoint, { ...options, method: 'DELETE' }),
 };
+=======
+>>>>>>> e51ad40449a03608e11afea6df7a10ca56c252f5
