@@ -75,6 +75,12 @@ class Job(Base):
         nullable=True,
     )
 
+    salary_currency: Mapped[str] = mapped_column(
+        String(10),
+        nullable=False,
+        default="INR",
+    )
+
     source: Mapped[str] = mapped_column(
         String(100),
         nullable=False,
@@ -88,6 +94,29 @@ class Job(Base):
     posted_at: Mapped[datetime | None] = mapped_column(
         DateTime(timezone=True),
         nullable=True,
+    )
+
+    first_seen_at: Mapped[datetime | None] = mapped_column(
+        DateTime(timezone=True),
+        server_default=func.now(),
+        nullable=True,
+    )
+
+    last_seen_at: Mapped[datetime | None] = mapped_column(
+        DateTime(timezone=True),
+        server_default=func.now(),
+        nullable=True,
+    )
+
+    status: Mapped[str] = mapped_column(
+        String(20),
+        nullable=False,
+        default="ACTIVE",
+    )
+
+    is_active: Mapped[bool] = mapped_column(
+        nullable=False,
+        default=True,
     )
 
     created_at: Mapped[datetime] = mapped_column(

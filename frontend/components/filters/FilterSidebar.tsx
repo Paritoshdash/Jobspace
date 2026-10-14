@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { JobFacets, SearchFilters } from '../../lib/types';
-import { Filter, RotateCcw, MapPin, Building2, Briefcase, Award, DollarSign } from 'lucide-react';
+import { Filter, RotateCcw, MapPin, Building2, Briefcase, Award, ArrowDownWideNarrow, IndianRupee } from 'lucide-react';
 
 interface FilterSidebarProps {
   facets: JobFacets | null;
@@ -22,11 +22,24 @@ export default function FilterSidebar({
     selectedFilters.company ||
     selectedFilters.experience_level ||
     selectedFilters.employment_type ||
-    selectedFilters.min_salary
+    selectedFilters.min_salary ||
+    selectedFilters.sort_by
   );
 
+  const indianCities = [
+    'Bengaluru',
+    'Hyderabad',
+    'Pune',
+    'Mumbai',
+    'Delhi',
+    'Gurgaon',
+    'Noida',
+    'Chennai',
+    'Remote',
+  ];
+
   return (
-    <aside className="w-full lg:w-72 shrink-0 bg-white rounded-xl border border-slate-200 p-5 space-y-6 shadow-xs">
+    <aside className="w-full lg:w-72 shrink-0 bg-white rounded-2xl border border-slate-200/90 p-5 space-y-6 shadow-xs">
       <div className="flex items-center justify-between pb-3 border-b border-slate-100">
         <div className="flex items-center gap-2">
           <Filter className="h-4 w-4 text-blue-600" />
@@ -43,43 +56,72 @@ export default function FilterSidebar({
         )}
       </div>
 
+      {/* Sort By Filter */}
+      <div className="space-y-2">
+        <label className="flex items-center gap-1.5 text-xs font-bold text-slate-700 uppercase tracking-wider">
+          <ArrowDownWideNarrow className="h-3.5 w-3.5 text-slate-400" />
+          Sort Results
+        </label>
+        <select
+          value={selectedFilters.sort_by || 'relevance'}
+          onChange={(e) => onFilterChange({ sort_by: e.target.value as any })}
+          className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-xs font-semibold text-slate-800 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 cursor-pointer"
+        >
+          <option value="relevance">Relevance (AI Ranked)</option>
+          <option value="newest">Newest First</option>
+          <option value="salary">Highest Salary</option>
+        </select>
+      </div>
+
       {/* Location Filter */}
       <div className="space-y-2">
         <label className="flex items-center gap-1.5 text-xs font-bold text-slate-700 uppercase tracking-wider">
           <MapPin className="h-3.5 w-3.5 text-slate-400" />
-          Location
+          Location (India & Remote)
         </label>
         <select
           value={selectedFilters.location || ''}
           onChange={(e) => onFilterChange({ location: e.target.value || undefined })}
-          className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-xs font-medium text-slate-800 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 cursor-pointer"
+          className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-xs font-medium text-slate-800 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 cursor-pointer"
         >
           <option value="">All Locations</option>
-          {facets?.locations.map((loc) => (
-            <option key={loc} value={loc}>
-              {loc}
+          {indianCities.map((city) => (
+            <option key={city} value={city}>
+              {city}
             </option>
           ))}
+          {facets?.locations
+            ?.filter((loc) => !indianCities.some((c) => loc.toLowerCase().includes(c.toLowerCase())))
+            .slice(0, 15)
+            .map((loc) => (
+              <option key={loc} value={loc}>
+                {loc}
+              </option>
+            ))}
         </select>
       </div>
 
-      {/* Company Filter */}
+      {/* Minimum Salary in LPA */}
       <div className="space-y-2">
         <label className="flex items-center gap-1.5 text-xs font-bold text-slate-700 uppercase tracking-wider">
-          <Building2 className="h-3.5 w-3.5 text-slate-400" />
-          Company
+          <IndianRupee className="h-3.5 w-3.5 text-slate-400" />
+          Min Salary (LPA)
         </label>
         <select
-          value={selectedFilters.company || ''}
-          onChange={(e) => onFilterChange({ company: e.target.value || undefined })}
-          className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-xs font-medium text-slate-800 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 cursor-pointer"
+          value={selectedFilters.min_salary || ''}
+          onChange={(e) => {
+            const val = e.target.value ? parseInt(e.target.value, 10) : undefined;
+            onFilterChange({ min_salary: val });
+          }}
+          className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-xs font-medium text-slate-800 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 cursor-pointer"
         >
-          <option value="">All Companies</option>
-          {facets?.companies.map((comp) => (
-            <option key={comp} value={comp}>
-              {comp}
-            </option>
-          ))}
+          <option value="">Any Salary</option>
+          <option value="300000">&#8377;3+ LPA</option>
+          <option value="600000">&#8377;6+ LPA</option>
+          <option value="1000000">&#8377;10+ LPA</option>
+          <option value="1500000">&#8377;15+ LPA</option>
+          <option value="2500000">&#8377;25+ LPA</option>
+          <option value="4000000">&#8377;40+ LPA</option>
         </select>
       </div>
 
@@ -92,16 +134,13 @@ export default function FilterSidebar({
         <select
           value={selectedFilters.experience_level || ''}
           onChange={(e) => onFilterChange({ experience_level: e.target.value || undefined })}
-          className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-xs font-medium text-slate-800 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 cursor-pointer"
+          className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-xs font-medium text-slate-800 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 cursor-pointer"
         >
           <option value="">All Experience Levels</option>
-          {facets?.experience_levels
-            .filter((exp) => !exp.includes('|'))
-            .map((exp) => (
-              <option key={exp} value={exp}>
-                {exp.charAt(0).toUpperCase() + exp.slice(1)}
-              </option>
-            ))}
+          <option value="intern">Internship / Trainee</option>
+          <option value="junior">Junior / Fresher (0-2 yrs)</option>
+          <option value="mid">Mid Level (3-5 yrs)</option>
+          <option value="senior">Senior (5+ yrs)</option>
         </select>
       </div>
 
@@ -114,44 +153,40 @@ export default function FilterSidebar({
         <select
           value={selectedFilters.employment_type || ''}
           onChange={(e) => onFilterChange({ employment_type: e.target.value || undefined })}
-          className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-xs font-medium text-slate-800 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 cursor-pointer"
+          className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-xs font-medium text-slate-800 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 cursor-pointer"
         >
           <option value="">All Types</option>
-          {facets?.employment_types.map((type) => (
-            <option key={type} value={type}>
-              {type}
-            </option>
-          ))}
+          <option value="Full-time">Full-time</option>
+          <option value="Part-time">Part-time</option>
+          <option value="Contract">Contract</option>
+          <option value="Internship">Internship</option>
         </select>
       </div>
 
-      {/* Minimum Salary */}
+      {/* Company Filter */}
       <div className="space-y-2">
         <label className="flex items-center gap-1.5 text-xs font-bold text-slate-700 uppercase tracking-wider">
-          <DollarSign className="h-3.5 w-3.5 text-slate-400" />
-          Min Annual Salary
+          <Building2 className="h-3.5 w-3.5 text-slate-400" />
+          Company
         </label>
         <select
-          value={selectedFilters.min_salary || ''}
-          onChange={(e) => {
-            const val = e.target.value ? parseInt(e.target.value, 10) : undefined;
-            onFilterChange({ min_salary: val });
-          }}
-          className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-xs font-medium text-slate-800 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 cursor-pointer"
+          value={selectedFilters.company || ''}
+          onChange={(e) => onFilterChange({ company: e.target.value || undefined })}
+          className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-xs font-medium text-slate-800 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 cursor-pointer"
         >
-          <option value="">Any Salary</option>
-          <option value="50000">$50,000+</option>
-          <option value="80000">$80,000+</option>
-          <option value="100000">$100,000+</option>
-          <option value="120000">$120,000+</option>
-          <option value="150000">$150,000+</option>
+          <option value="">All Companies</option>
+          {facets?.companies.map((comp) => (
+            <option key={comp} value={comp}>
+              {comp}
+            </option>
+          ))}
         </select>
       </div>
 
       {facets?.total_jobs !== undefined && (
         <div className="pt-2 border-t border-slate-100 text-center">
           <span className="text-xs text-slate-500 font-medium">
-            Total indexed opportunities: <strong className="text-slate-900 font-bold">{facets.total_jobs}</strong>
+            Active verified postings: <strong className="text-slate-900 font-bold">{facets.total_jobs}</strong>
           </span>
         </div>
       )}

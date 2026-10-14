@@ -139,6 +139,7 @@ def search_jobs(
     employment_type: str | None = Query(default=None),
     min_salary: int | None = Query(default=None, ge=0),
     max_salary: int | None = Query(default=None, ge=0),
+    sort_by: str = Query(default="relevance", description="Sort by relevance, newest, or salary"),
     current_user: User | None = Depends(get_optional_current_user),
     db: Session = Depends(get_db),
 ):
@@ -163,6 +164,7 @@ def search_jobs(
             employment_type=final_employment,
             min_salary=final_min_salary,
             max_salary=final_max_salary,
+            sort_by=sort_by,
         )
 
     except ValueError as exc:
@@ -175,8 +177,9 @@ def search_jobs(
         {
             "job": _serialize_job(job, current_user=current_user, db=db),
             "relevance_score": score,
+            "match_reasons": reasons,
         }
-        for job, score in results
+        for job, score, reasons in results
     ]
 
 

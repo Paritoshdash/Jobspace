@@ -5,13 +5,16 @@ from app.api.v1.acquisition import router as acquisition_router
 from app.api.v1.applications import router as applications_router
 from app.api.v1.auth import router as auth_router
 from app.api.v1.jobs import router as jobs_router
+from app.api.v1.profile import router as profile_router
+from app.api.v1.recommendations import router as recommendations_router
+from app.api.v1.resumes import router as resumes_router
 from app.api.v1.saved_jobs import router as saved_jobs_router
 from app.api.v1.users import router as users_router
 
 app = FastAPI(
     title="JobSpace API",
-    description="AI-powered job intelligence and search platform",
-    version="0.2.0",
+    description="India-first AI-powered job intelligence and candidate matching platform",
+    version="0.3.0",
 )
 
 # Enable CORS for frontend integration
@@ -30,6 +33,21 @@ app.include_router(
 
 app.include_router(
     users_router,
+    prefix="/api/v1",
+)
+
+app.include_router(
+    profile_router,
+    prefix="/api/v1",
+)
+
+app.include_router(
+    resumes_router,
+    prefix="/api/v1",
+)
+
+app.include_router(
+    recommendations_router,
     prefix="/api/v1",
 )
 

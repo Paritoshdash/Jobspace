@@ -62,6 +62,7 @@ class JobResponse(BaseModel):
 class JobSearchResult(BaseModel):
     job: JobResponse
     relevance_score: float
+    match_reasons: list[str] = Field(default_factory=list)
 
 
 class JobFacetsResponse(BaseModel):

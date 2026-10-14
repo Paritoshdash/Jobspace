@@ -82,3 +82,22 @@ export async function apiFetch<T>(
     return text as unknown as T;
   }
 }
+
+export const apiClient = {
+  get: <T>(endpoint: string, options?: RequestInit): Promise<T> =>
+    apiFetch<T>(endpoint, { ...options, method: 'GET' }),
+  post: <T>(endpoint: string, body?: any, options?: RequestInit): Promise<T> =>
+    apiFetch<T>(endpoint, {
+      ...options,
+      method: 'POST',
+      body: body !== undefined ? JSON.stringify(body) : undefined,
+    }),
+  put: <T>(endpoint: string, body?: any, options?: RequestInit): Promise<T> =>
+    apiFetch<T>(endpoint, {
+      ...options,
+      method: 'PUT',
+      body: body !== undefined ? JSON.stringify(body) : undefined,
+    }),
+  delete: <T>(endpoint: string, options?: RequestInit): Promise<T> =>
+    apiFetch<T>(endpoint, { ...options, method: 'DELETE' }),
+};

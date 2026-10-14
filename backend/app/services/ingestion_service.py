@@ -1,5 +1,6 @@
+from datetime import datetime, timezone, timedelta
 import logging
-from sqlalchemy import func, select
+from sqlalchemy import func, select, update
 from sqlalchemy.orm import Session
 
 from app.models.job import Job
@@ -82,8 +83,13 @@ def ingest_jobs(
             )
 
         if existing_job is not None:
-            # Update existing job with refreshed metadata if present
-            updated = False
+            # Update existing job with refreshed metadata and last_seen timestamp
+            now_dt = datetime.now(timezone.utc)
+            existing_job.last_seen_at = now_dt
+            existing_job.is_active = True
+            existing_job.status = "ACTIVE"
+            updated = True
+
             if job_data.posted_at and existing_job.posted_at != job_data.posted_at:
                 existing_job.posted_at = job_data.posted_at
                 updated = True
@@ -109,6 +115,7 @@ def ingest_jobs(
         # --------------------------------------------------
         # 3. Create job
         # --------------------------------------------------
+        now_dt = datetime.now(timezone.utc)
         job = Job(
             title=title_clean,
             company=company_clean,
@@ -118,9 +125,14 @@ def ingest_jobs(
             experience_level=job_data.experience_level.strip().lower() if job_data.experience_level else None,
             salary_min=job_data.salary_min,
             salary_max=job_data.salary_max,
+            salary_currency="INR",
             source=source_clean,
             source_url=source_url_clean,
             posted_at=job_data.posted_at,
+            first_seen_at=now_dt,
+            last_seen_at=now_dt,
+            status="ACTIVE",
+            is_active=True,
             analysis_status="pending",
         )
 
@@ -220,6 +232,25 @@ def backfill_missing_embeddings(db: Session, limit: int = 50) -> int:
         db.commit()
 
     return processed
+
+
+def mark_stale_jobs(db: Session, days: int = 30) -> int:
+    """
+    Mark jobs that have not been seen in the specified number of days as STALE and inactive.
+    """
+    cutoff = datetime.now(timezone.utc) - timedelta(days=days)
+    stmt = (
+        update(Job)
+        .where(
+            Job.is_active.is_(True),
+            Job.last_seen_at.is_not(None),
+            Job.last_seen_at < cutoff,
+        )
+        .values(status="STALE", is_active=False)
+    )
+    result = db.execute(stmt)
+    db.commit()
+    return result.rowcount
 
 
 def reprocess_failed_analyses(db: Session, limit: int = 20) -> int:
