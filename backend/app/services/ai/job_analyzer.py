@@ -5,6 +5,7 @@ from app.services.ai.llm_service import generate_text
 
 
 def summarize_job(description: str) -> str:
+    clean_desc = description.strip()[:2500]
     prompt = f"""
 Summarize the following job description in 2-3 concise sentences.
 
@@ -18,13 +19,16 @@ Do not use bullet points.
 Return only the summary.
 
 Job description:
-{description}
+{clean_desc}
 """
 
     return generate_text(
         prompt,
         temperature=0.1,
+        num_predict=150,
+        think=False,
     )
+
 
 
 def analyze_job(description: str) -> JobAnalysis:

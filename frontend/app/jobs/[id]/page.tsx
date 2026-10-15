@@ -50,6 +50,7 @@ export default function JobDetailsPage({ params }: JobDetailsProps) {
 
   const [isSummarizing, setIsSummarizing] = useState(false);
   const [aiSummary, setAiSummary] = useState<string | null>(null);
+  const [summaryError, setSummaryError] = useState<string | null>(null);
 
   useEffect(() => {
     if (isNaN(jobId)) {
@@ -141,17 +142,22 @@ export default function JobDetailsPage({ params }: JobDetailsProps) {
   const handleGenerateSummary = async () => {
     if (isSummarizing) return;
     setIsSummarizing(true);
+    setSummaryError(null);
     try {
       const res = await summarizeJob(jobId);
       if (res.summary) {
         setAiSummary(res.summary);
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error('Failed to summarize job', err);
+      setSummaryError(
+        err?.message || 'Failed to generate summary. Please ensure your local Ollama service is reachable.'
+      );
     } finally {
       setIsSummarizing(false);
     }
   };
+
 
   if (isLoading) {
     return (
@@ -372,7 +378,15 @@ export default function JobDetailsPage({ params }: JobDetailsProps) {
               </p>
             )}
           </div>
+
+          {summaryError && (
+            <div className="flex items-center gap-2 rounded-lg bg-red-50 border border-red-200 p-3 text-xs text-red-700 mt-2">
+              <AlertCircle className="h-4 w-4 shrink-0 text-red-500" />
+              <span>{summaryError}</span>
+            </div>
+          )}
         </div>
+
 
         {/* Skills Section */}
         {job.skills && job.skills.length > 0 && (

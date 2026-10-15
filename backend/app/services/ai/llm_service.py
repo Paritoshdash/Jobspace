@@ -1,3 +1,4 @@
+import re
 import requests
 
 
@@ -10,9 +11,11 @@ def generate_text(
     temperature: float = 0.2,
     num_predict: int = 512,
     json_mode: bool = False,
+    think: bool = False,
 ) -> str:
     """
     Generate text using a local Ollama model.
+    Disables thinking mode by default to prevent long CPU latency and token exhaustion.
     """
 
     options = {
@@ -25,19 +28,17 @@ def generate_text(
         "prompt": prompt,
         "stream": False,
         "options": options,
+        "think": think,
     }
 
-    # Qwen3 thinking is unnecessary for structured extraction
-    # and can consume the output token budget.
     if json_mode:
         payload["format"] = "json"
-        payload["think"] = False
 
     try:
         response = requests.post(
             OLLAMA_URL,
             json=payload,
-            timeout=300,
+            timeout=180,
         )
 
         response.raise_for_status()
@@ -56,4 +57,7 @@ def generate_text(
             "Ollama returned an empty response."
         )
 
-    return text.strip()
+    # Strip thinking tags if returned by reasoning models
+    text = re.sub(r"<think>[\s\S]*?</think>", "", text).strip()
+
+    return text

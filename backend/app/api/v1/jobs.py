@@ -230,12 +230,30 @@ def summarize_job_endpoint(
             detail="Job description is empty.",
         )
 
-    summary = summarize_job(job.description)
+    if job.summary:
+        return {
+            "job_id": job.id,
+            "summary": job.summary,
+        }
+
+    try:
+        summary = summarize_job(job.description)
+        job.summary = summary
+        job.analysis_status = "completed"
+        db.commit()
+        db.refresh(job)
+    except Exception as exc:
+        db.rollback()
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail=f"AI summarization service unavailable: {exc}",
+        )
 
     return {
         "job_id": job.id,
         "summary": summary,
     }
+
 
 
 @router.post(
